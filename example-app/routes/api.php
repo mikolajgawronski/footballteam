@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DuelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Authorization\LoginController;
@@ -18,7 +19,7 @@ use App\Http\Controllers\Api\Authorization\LoginController;
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout']);
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+//Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //START THE DUEL
     Route::post('duels', function (Request $request) {
@@ -42,34 +43,35 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     //DUELS HISTORY
-    Route::get('duels', function (Request $request) {
-        return [
-            [
-                "id" => 1,
-                "player_name" => "Jan Kowalski",
-                "opponent_name" => "Piotr Nowak",
-                "won" => 0
-            ],
-            [
-                "id" => 2,
-                "player_name" => "Jan Kowalski",
-                "opponent_name" => "Tomasz Kaczyński",
-                "won" => 1
-            ],
-            [
-                "id" => 3,
-                "player_name" => "Jan Kowalski",
-                "opponent_name" => "Agnieszka Tomczak",
-                "won" => 1
-            ],
-            [
-                "id" => 4,
-                "player_name" => "Jan Kowalski",
-                "opponent_name" => "Michał Bladowski",
-                "won" => 1
-            ],
-        ];
-    });
+//    Route::get('duels', function (Request $request) {
+//        return [
+//            [
+//                "id" => 1,
+//                "player_name" => "Jan Kowalski",
+//                "opponent_name" => "Piotr Nowak",
+//                "won" => 0
+//            ],
+//            [
+//                "id" => 2,
+//                "player_name" => "Jan Kowalski",
+//                "opponent_name" => "Tomasz Kaczyński",
+//                "won" => 1
+//            ],
+//            [
+//                "id" => 3,
+//                "player_name" => "Jan Kowalski",
+//                "opponent_name" => "Agnieszka Tomczak",
+//                "won" => 1
+//            ],
+//            [
+//                "id" => 4,
+//                "player_name" => "Jan Kowalski",
+//                "opponent_name" => "Michał Bladowski",
+//                "won" => 1
+//            ],
+//        ];
+//    });
+    Route::get('duels', [DuelController::class, 'actionList'])->name('duel.list');
 
     //CARDS
     Route::post('cards', function (Request $request) {
@@ -87,4 +89,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             'new_card_allowed' => true,
         ];
     });
-});
+//});
