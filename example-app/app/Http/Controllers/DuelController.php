@@ -31,19 +31,4 @@ class DuelController extends Controller
 
         return new JsonResponse($data);
     }
-
-    public function getTimesheetEntriesForUser(int $userId): array
-    {
-        $timesheetEntries = TimesheetEntry::query()->where('user_id', '=', $userId)->get();
-
-        $groupedTimesheetEntries = $timesheetEntries->groupBy('task_id');
-
-        $result = [];
-
-        foreach ($groupedTimesheetEntries as $taskId => $timesheetEntriesGroup) {
-            $result = $this->getGrouppedTimesheetEntries($timesheetEntriesGroup, $taskId, $result);
-        }
-
-        return $result;
-    }
 }
