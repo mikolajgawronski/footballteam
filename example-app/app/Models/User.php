@@ -12,12 +12,19 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $name
  * @property string $email
  * @property string $password
+ * @property int $level
+ * @property int $level_points
  */
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+
+    public const POINTS_REQUIRED_TO_LEVEL_TWO = 100;
+    public const POINTS_REQUIRED_TO_LEVEL_THREE = 160;
+
+    public const CARDS_ALLOWED_PER_LEVEL = 5;
 
     /**
      * The attributes that are mass assignable.

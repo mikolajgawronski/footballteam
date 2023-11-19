@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Interfaces\Duel\DuelDataMapperInterface;
+use App\Http\Interfaces\Duel\DuelRepositoryInterface;
 use App\Http\Mappers\DuelDataMapper;
 use App\Http\Repositories\DuelRepository;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class DuelController extends Controller
 {
     public function __construct(
-        private DuelRepository $duelRepository,
-        private DuelDataMapper $duelDataMapper,
+        private DuelRepositoryInterface $duelRepository,
+        private DuelDataMapperInterface $duelDataMapper,
     ) {}
 
     public function actionList(): JsonResponse

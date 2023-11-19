@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\CardController;
-use App\Http\Controllers\DuelController;
+use App\Http\Controllers\Api\Authorization\LoginController;
+use App\Http\Controllers\Api\CardController;
+use App\Http\Controllers\Api\DuelController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Authorization\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,17 +48,18 @@ Route::post('logout', [LoginController::class, 'logout']);
     Route::get('duels', [DuelController::class, 'actionList'])->name('duel.list');
 
     //CARDS
-    Route::post('cards', [CardController::class, 'actionList'])->name('duel.list');
+    Route::post('cards', [CardController::class, 'actionAddNewCard'])->name('card.list');
 
     //USER DATA
-    Route::get('user-data', function (Request $request) {
-        return [
-            'id' => 1,
-            'username' => 'Test User',
-            'level' => 1,
-            'level_points' => '40/100',
-            'cards' => config('game.cards'),
-            'new_card_allowed' => true,
-        ];
-    });
+    Route::get('user-data', [UserController::class, 'actionUserData'])->name('user.data');
+//    Route::get('user-data', function (Request $request) {
+//        return [
+//            'id' => 1,
+//            'username' => 'Test User',
+//            'level' => 1,
+//            'level_points' => '40/100',
+//            'cards' => config('game.cards'),
+//            'new_card_allowed' => true,
+//        ];
+//    });
 //});

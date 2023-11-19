@@ -2,9 +2,10 @@
 
 namespace App\Http\Repositories;
 
+use App\Http\Interfaces\Duel\DuelRepositoryInterface;
 use App\Models\Duel;
 
-class DuelRepository
+class DuelRepository implements DuelRepositoryInterface
 {
     public function getDuelsForUser(int $userId): array
     {

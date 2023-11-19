@@ -2,10 +2,11 @@
 
 namespace App\Http\Repositories;
 
+use App\Http\Interfaces\Card\CardRepositoryInterface;
 use App\Models\Card;
 use App\Models\UserCard;
 
-class CardRepository
+class CardRepository implements CardRepositoryInterface
 {
     public function getCardsForUser(int $userId): array
     {
@@ -15,5 +16,10 @@ class CardRepository
     public function getCard(int $cardId): Card
     {
         return Card::findOrFail($cardId);
+    }
+
+    public function getRandomCard(): Card
+    {
+        return Card::query()->inRandomOrder()->firstOrFail();
     }
 }

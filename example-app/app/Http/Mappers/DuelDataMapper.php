@@ -2,10 +2,11 @@
 
 namespace App\Http\Mappers;
 
+use App\Http\Interfaces\Duel\DuelDataMapperInterface;
 use App\Models\Duel;
 use App\Models\User;
 
-class DuelDataMapper
+class DuelDataMapper implements DuelDataMapperInterface
 {
     public function getDuelsResponseDataForUser(array $duels, User $user): array
     {
