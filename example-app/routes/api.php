@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\DuelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,40 +44,10 @@ Route::post('logout', [LoginController::class, 'logout']);
     });
 
     //DUELS HISTORY
-//    Route::get('duels', function (Request $request) {
-//        return [
-//            [
-//                "id" => 1,
-//                "player_name" => "Jan Kowalski",
-//                "opponent_name" => "Piotr Nowak",
-//                "won" => 0
-//            ],
-//            [
-//                "id" => 2,
-//                "player_name" => "Jan Kowalski",
-//                "opponent_name" => "Tomasz Kaczyński",
-//                "won" => 1
-//            ],
-//            [
-//                "id" => 3,
-//                "player_name" => "Jan Kowalski",
-//                "opponent_name" => "Agnieszka Tomczak",
-//                "won" => 1
-//            ],
-//            [
-//                "id" => 4,
-//                "player_name" => "Jan Kowalski",
-//                "opponent_name" => "Michał Bladowski",
-//                "won" => 1
-//            ],
-//        ];
-//    });
     Route::get('duels', [DuelController::class, 'actionList'])->name('duel.list');
 
     //CARDS
-    Route::post('cards', function (Request $request) {
-        return response()->json();
-    });
+    Route::post('cards', [CardController::class, 'actionList'])->name('duel.list');
 
     //USER DATA
     Route::get('user-data', function (Request $request) {
