@@ -19,11 +19,13 @@ return new class extends Migration
             $table->unsignedBigInteger('opponent_id');
             $table->foreign("opponent_id")->references("id")->on("users")
                 ->onDelete("cascade");
-            $table->unsignedBigInteger('winner_id');
+            $table->unsignedBigInteger('winner_id')->nullable()->default(null);
             $table->foreign("winner_id")->references("id")->on("users")
                 ->onDelete("cascade");
             $table->integer('current_round')->default(1);
             $table->enum('status', ['active', 'finished'])->default('active');
+            $table->string('player_score')->default(0);
+            $table->string('opponent_score')->default(0);
             $table->timestamps();
         });
     }

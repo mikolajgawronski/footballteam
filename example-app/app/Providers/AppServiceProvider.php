@@ -32,43 +32,43 @@ class AppServiceProvider extends ServiceProvider
         //data mappers
         $this->app->bind(
             UserDataMapperInterface::class,
-            UserDataMapper::class
+            UserDataMapper::class,
         );
         $this->app->bind(
             DuelDataMapperInterface::class,
-            DuelDataMapper::class
+            DuelDataMapper::class,
         );
         $this->app->bind(
             CardDataMapperInterface::class,
-            CardDataMapper::class
+            CardDataMapper::class,
         );
 
         //services
         $this->app->bind(
             CardServiceInterface::class,
-            CardService::class
+            CardService::class,
         );
         $this->app->bind(
             DuelServiceInterface::class,
-            DuelService::class
+            DuelService::class,
         );
         $this->app->bind(
             UserServiceInterface::class,
-            UserService::class
+            UserService::class,
         );
 
         //repositories
         $this->app->bind(
             CardRepositoryInterface::class,
-            CardRepository::class
+            CardRepository::class,
         );
         $this->app->bind(
             DuelRepositoryInterface::class,
-            DuelRepository::class
+            DuelRepository::class,
         );
         $this->app->bind(
             UserRepositoryInterface::class,
-            UserRepository::class
+            UserRepository::class,
         );
     }
 

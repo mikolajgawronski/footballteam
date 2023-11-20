@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Interfaces\Card\CardRepositoryInterface;
 use App\Http\Interfaces\User\UserDataMapperInterface;
-use App\Http\Mappers\UserDataMapper;
-use App\Http\Repositories\CardRepository;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 

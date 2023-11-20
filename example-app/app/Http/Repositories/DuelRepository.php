@@ -20,11 +20,12 @@ class DuelRepository implements DuelRepositoryInterface
     public function getActiveDuelForUser(int $userId): ?Duel
     {
         return Duel::query()
-            ->where('player_id', '=', $userId)
-            ->orWhere('opponent_id', '=', $userId)
+            ->where(function ($query) use ($userId): void {
+                $query->where('player_id', '=', $userId)
+                    ->orWhere('opponent_id', '=', $userId);
+            })
             ->where('winner_id', '=', null)
             ->where('status', '=', Duel::STATUS_ACTIVE)
-            ->get()
-            ->first() ?? null;
+            ->first();
     }
 }

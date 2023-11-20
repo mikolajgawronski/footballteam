@@ -2,12 +2,16 @@
 
 namespace App\Http\Mappers;
 
+use App\Http\Interfaces\Card\CardDataMapperInterface;
 use App\Http\Interfaces\User\UserDataMapperInterface;
-use App\Models\Card;
 use App\Models\User;
 
 class UserDataMapper implements UserDataMapperInterface
 {
+    public function __construct(
+        private CardDataMapperInterface $cardDataMapper,
+    ) {}
+
     public function getUserResponseData(array $userCards, User $user): array
     {
         return [
@@ -15,28 +19,9 @@ class UserDataMapper implements UserDataMapperInterface
             'username' => $user->name,
             'level' => $user->level,
             'level_points' => $this->prepareLevelPointsData($user),
-            'cards' => $this->prepareCardsData($userCards),
+            'cards' => $this->cardDataMapper->prepareCardData($userCards),
             'new_card_allowed' => $this->checkIfNewCardAllowed($userCards, $user),
         ];
-    }
-
-    private function prepareCardsData(array $userCards): array
-    {
-        $data = [];
-
-        foreach ($userCards as $userCard) {
-            /** @var Card $card */
-            $card = $userCard->card;
-
-            $data[] = [
-                'id' => $card->id,
-                'name' => $card->name,
-                'power' => $card->power,
-                'image' => $card->image,
-            ];
-        }
-
-        return $data;
     }
 
     private function prepareLevelPointsData(User $user): string

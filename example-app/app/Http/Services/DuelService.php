@@ -2,12 +2,9 @@
 
 namespace App\Http\Services;
 
-use App\Http\Interfaces\Card\CardServiceInterface;
 use App\Http\Interfaces\Duel\DuelServiceInterface;
-use App\Models\Card;
 use App\Models\Duel;
 use App\Models\User;
-use App\Models\UserCard;
 
 class DuelService implements DuelServiceInterface
 {

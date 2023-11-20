@@ -2,7 +2,6 @@
 
 namespace App\Http\Interfaces\User;
 
-use App\Models\Duel;
 use App\Models\User;
 
 interface UserRepositoryInterface

@@ -2,7 +2,6 @@
 
 namespace App\Http\Interfaces\Duel;
 
-use App\Models\Card;
 use App\Models\Duel;
 use App\Models\User;
 

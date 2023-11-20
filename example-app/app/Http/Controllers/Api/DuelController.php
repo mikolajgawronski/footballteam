@@ -9,8 +9,6 @@ use App\Http\Interfaces\Duel\DuelRepositoryInterface;
 use App\Http\Interfaces\Duel\DuelServiceInterface;
 use App\Http\Interfaces\User\UserRepositoryInterface;
 use App\Http\Interfaces\User\UserServiceInterface;
-use App\Http\Mappers\DuelDataMapper;
-use App\Http\Repositories\DuelRepository;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
@@ -37,6 +35,19 @@ class DuelController extends Controller
         return new JsonResponse($data);
     }
 
+    public function actionStartTheDuel(): JsonResponse
+    {
+        /** @var User $user */
+        //        $user = Auth::user();
+        $user = User::query()->firstOrFail();
+
+        $opponent = $this->userRepository->getRandomOpponentForUser($user->id);
+        $this->userService->prepareOpponentForDuel($opponent, $user->level);
+        $duel = $this->duelService->createDuel($user, $opponent);
+
+        return new JsonResponse(['Message' => 'Duel started!']);
+    }
+
     public function actionActiveDuel(): JsonResponse
     {
         /** @var User $user */
@@ -44,13 +55,7 @@ class DuelController extends Controller
         $user = User::query()->firstOrFail();
         $duel = $this->duelRepository->getActiveDuelForUser($user->id);
 
-        if ($duel === null) {
-            $opponent = $this->userRepository->getRandomOpponentForUser($user->id);
-            $this->userService->prepareOpponentForDuel($opponent);
-            $duel = $this->duelService->createDuel($user, $opponent);
-            $this->cardService->addCardsForOpponent($opponent);
-        }
-        $data = $this->duelDataMapper->getActiveDuelResponseDataForUser($duel, $user);
+        $data = $this->duelDataMapper->getActiveDuelResponseDataForUser($duel);
 
         return new JsonResponse($data);
     }

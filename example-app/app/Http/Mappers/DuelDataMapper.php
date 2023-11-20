@@ -2,12 +2,19 @@
 
 namespace App\Http\Mappers;
 
+use App\Http\Interfaces\Card\CardDataMapperInterface;
+use App\Http\Interfaces\Card\CardRepositoryInterface;
 use App\Http\Interfaces\Duel\DuelDataMapperInterface;
 use App\Models\Duel;
 use App\Models\User;
 
 class DuelDataMapper implements DuelDataMapperInterface
 {
+    public function __construct(
+        private CardRepositoryInterface $cardRepository,
+        private CardDataMapperInterface $cardDataMapper,
+    ) {}
+
     public function getDuelsResponseDataForUser(array $duels, User $user): array
     {
         $data = [];
@@ -22,6 +29,20 @@ class DuelDataMapper implements DuelDataMapperInterface
         }
 
         return $data;
+    }
+
+    public function getActiveDuelResponseDataForUser(Duel $duel): array
+    {
+        $userCards = $this->cardRepository->getCardsForUser($duel->player_id);
+        $cards = $this->cardDataMapper->prepareCardData($userCards);
+
+        return [
+            'round' => $duel->current_round,
+            'your_points' => $duel->player_points,
+            'opponent_points' => $duel->opponent_points,
+            'status' => $duel->status,
+            'cards' => $cards,
+        ];
     }
 
     private function getPlayerName(Duel $duel, User $user): string
