@@ -22,6 +22,8 @@ return new class extends Migration
             $table->unsignedBigInteger('winner_id');
             $table->foreign("winner_id")->references("id")->on("users")
                 ->onDelete("cascade");
+            $table->integer('current_round')->default(1);
+            $table->enum('status', ['active', 'finished'])->default('active');
             $table->timestamps();
         });
     }

@@ -16,4 +16,16 @@ class CardService implements CardServiceInterface
         $userCard->card_id = $card->id;
         $userCard->save();
     }
+
+    public function addCardsForOpponent(User $opponent, int $playerLevel): void
+    {
+        //get one random card
+        $card = Card::query()
+            ->inRandomOrder()
+            ->first();
+
+        foreach ($cards as $card) {
+            $this->addCardToUser($opponent, $card);
+        }
+    }
 }

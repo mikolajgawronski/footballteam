@@ -18,6 +18,8 @@ class DuelSeeder extends Seeder
             'player_id' => 1,
             'opponent_id' => 2,
             'winner_id' => 1,
+            'current_round' => 5,
+            'status' => 'finished',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -26,6 +28,8 @@ class DuelSeeder extends Seeder
             'player_id' => 1,
             'opponent_id' => 2,
             'winner_id' => 2,
+            'current_round' => 5,
+            'status' => 'finished',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -34,6 +38,8 @@ class DuelSeeder extends Seeder
             'player_id' => 2,
             'opponent_id' => 1,
             'winner_id' => 1,
+            'current_round' => 5,
+            'status' => 'finished',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);

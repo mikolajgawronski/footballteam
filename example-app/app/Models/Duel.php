@@ -11,10 +11,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $player_id
  * @property int $opponent_id
  * @property int $winner_id
+ * @property int $current_round
+ * @property string $status
  */
 class Duel extends Model
 {
     use HasFactory;
+
+    public const STATUS_ACTIVE = 'active';
+    public const STATUS_FINISHED = 'finished';
+    public const MAX_ROUNDS = 5;
 
     public function player(): BelongsTo
     {

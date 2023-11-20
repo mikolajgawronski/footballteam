@@ -9,6 +9,22 @@ class DuelRepository implements DuelRepositoryInterface
 {
     public function getDuelsForUser(int $userId): array
     {
-        return Duel::query()->where('player_id', '=', $userId)->orWhere('opponent_id', '=', $userId)->get()->all();
+        return Duel::query()
+            ->where('player_id', '=', $userId)
+            ->orWhere('opponent_id', '=', $userId)
+            ->where('status', '=', Duel::STATUS_FINISHED)
+            ->get()
+            ->all();
+    }
+
+    public function getActiveDuelForUser(int $userId): ?Duel
+    {
+        return Duel::query()
+            ->where('player_id', '=', $userId)
+            ->orWhere('opponent_id', '=', $userId)
+            ->where('winner_id', '=', null)
+            ->where('status', '=', Duel::STATUS_ACTIVE)
+            ->get()
+            ->first() ?? null;
     }
 }
