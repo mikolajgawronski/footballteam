@@ -30,4 +30,17 @@ class DuelRepository implements DuelRepositoryInterface
             ->where('status', '=', Duel::STATUS_ACTIVE)
             ->first();
     }
+
+    public function getLastDuelForUser(int $userId): ?Duel
+    {
+        return Duel::query()
+            ->where(function ($query) use ($userId): void {
+                $query->where('player_id', '=', $userId)
+                    ->orWhere('opponent_id', '=', $userId);
+            })
+            ->where('winner_id', '!=', null)
+            ->where('status', '=', Duel::STATUS_FINISHED)
+            ->orderBy('id', 'desc')
+            ->first();
+    }
 }

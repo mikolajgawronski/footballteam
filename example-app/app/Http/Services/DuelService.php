@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Http\Interfaces\Card\CardRepositoryInterface;
 use App\Http\Interfaces\Duel\DuelServiceInterface;
+use App\Http\Interfaces\User\UserServiceInterface;
 use App\Models\Duel;
 use App\Models\User;
 
@@ -11,6 +12,7 @@ class DuelService implements DuelServiceInterface
 {
     public function __construct(
         private CardRepositoryInterface $cardRepository,
+        private UserServiceInterface $userService,
     ) {}
 
     public function createDuel(User $player, User $opponent): Duel
@@ -26,9 +28,12 @@ class DuelService implements DuelServiceInterface
     public function getRandomCardPowerFromOpponent(User $opponent): int
     {
         $opponentCards = $this->cardRepository->getCardsForUser($opponent->id);
-        $chosenCard = $this->cardRepository->getCard($opponentCards[array_rand($opponentCards)]->card_id);
+        $cardFromOpponent = $opponentCards[array_rand($opponentCards)];
 
-        return $chosenCard->power;
+        $cardPower = $this->cardRepository->getCard($cardFromOpponent->card_id)->power;
+        //        $cardFromOpponent->delete();
+
+        return $cardPower;
     }
 
     public function updateDuel(Duel $duel, int $playerScore, int $opponentScore): void
@@ -39,6 +44,7 @@ class DuelService implements DuelServiceInterface
         if ($duel->current_round === 5) {
             $duel->status = Duel::STATUS_FINISHED;
             $duel->winner_id = $this->checkForWinner($duel);
+            $this->userService->grantLevelPointsToWinner($duel->winner);
         }
 
         if ($duel->current_round < 5) {
@@ -50,6 +56,6 @@ class DuelService implements DuelServiceInterface
 
     private function checkForWinner(Duel $duel): int
     {
-        return $duel->player_points > $duel->opponent_points ? $duel->player_id : $duel->opponent_id;
+        return $duel->player_score > $duel->opponent_score ? $duel->player_id : $duel->opponent_id;
     }
 }

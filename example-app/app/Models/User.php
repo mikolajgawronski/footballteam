@@ -25,6 +25,7 @@ class User extends Authenticatable
     public const POINTS_REQUIRED_TO_LEVEL_THREE = 160;
 
     public const CARDS_ALLOWED_PER_LEVEL = 5;
+    public const POINTS_AWARDED_PER_WIN = 20;
 
     /**
      * The attributes that are mass assignable.

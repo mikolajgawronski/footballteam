@@ -40,6 +40,10 @@ class DuelController extends Controller
         //        $user = Auth::user();
         $user = User::query()->firstOrFail();
 
+        if ($this->duelRepository->getActiveDuelForUser($user->id)) {
+            return new JsonResponse(['Message' => 'You already have an active duel! Resuming battle...']);
+        }
+
         $opponent = $this->userRepository->getRandomOpponentForUser($user->id);
         $this->userService->prepareOpponentForDuel($opponent, $user->level);
         $duel = $this->duelService->createDuel($user, $opponent);
@@ -52,7 +56,7 @@ class DuelController extends Controller
         /** @var User $user */
         //        $user = Auth::user();
         $user = User::query()->firstOrFail();
-        $duel = $this->duelRepository->getActiveDuelForUser($user->id);
+        $duel = $this->duelRepository->getActiveDuelForUser($user->id) ?? $this->duelRepository->getLastDuelForUser($user->id);
 
         $data = $this->duelDataMapper->getActiveDuelResponseDataForUser($duel);
 

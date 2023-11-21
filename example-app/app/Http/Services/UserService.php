@@ -16,6 +16,12 @@ class UserService implements UserServiceInterface
         $this->cardService->addCardsForOpponent($opponent);
     }
 
+    public function grantLevelPointsToWinner(User $winner): void
+    {
+        $winner->level_points += User::POINTS_AWARDED_PER_WIN;
+        $winner->save();
+    }
+
     private function setOpponentLevelToMatchUsers(User $opponent, int $userLevel): void
     {
         $opponent->level = $userLevel;
