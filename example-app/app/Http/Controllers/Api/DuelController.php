@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Interfaces\Card\CardServiceInterface;
 use App\Http\Interfaces\Duel\DuelDataMapperInterface;
 use App\Http\Interfaces\Duel\DuelRepositoryInterface;
 use App\Http\Interfaces\Duel\DuelServiceInterface;
 use App\Http\Interfaces\User\UserRepositoryInterface;
 use App\Http\Interfaces\User\UserServiceInterface;
+use App\Http\Requests\PlayCardRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
@@ -19,7 +19,6 @@ class DuelController extends Controller
         private UserRepositoryInterface $userRepository,
         private DuelDataMapperInterface $duelDataMapper,
         private DuelServiceInterface $duelService,
-        private CardServiceInterface $cardService,
         private UserServiceInterface $userService,
     ) {}
 
@@ -29,7 +28,7 @@ class DuelController extends Controller
         //        $user = Auth::user();
         $user = User::query()->firstOrFail();
 
-        $duels = $this->duelRepository->getDuelsForUser($user->id);
+        $duels = $this->duelRepository->getFinishedDuelsForUser($user->id);
         $data = $this->duelDataMapper->getDuelsResponseDataForUser($duels, $user);
 
         return new JsonResponse($data);
@@ -58,5 +57,21 @@ class DuelController extends Controller
         $data = $this->duelDataMapper->getActiveDuelResponseDataForUser($duel);
 
         return new JsonResponse($data);
+    }
+
+    public function actionPlayCard(PlayCardRequest $request): JsonResponse
+    {
+        /** @var User $user */
+        //        $user = Auth::user();
+        $user = User::query()->firstOrFail();
+        $duel = $this->duelRepository->getActiveDuelForUser($user->id);
+        $opponent = $this->userRepository->getOpponentFromDuel($duel);
+
+        $opponentCardPower = $this->duelService->getRandomCardPowerFromOpponent($opponent);
+        $cardPower = $request->power;
+
+        $this->duelService->updateDuel($duel, $cardPower, $opponentCardPower);
+
+        return new JsonResponse(['Message' => 'Card played successfully!']);
     }
 }

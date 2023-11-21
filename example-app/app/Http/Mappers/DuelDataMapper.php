@@ -38,8 +38,8 @@ class DuelDataMapper implements DuelDataMapperInterface
 
         return [
             'round' => $duel->current_round,
-            'your_points' => $duel->player_points,
-            'opponent_points' => $duel->opponent_points,
+            'your_points' => $duel->player_score,
+            'opponent_points' => $duel->opponent_score,
             'status' => $duel->status,
             'cards' => $cards,
         ];

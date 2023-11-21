@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $winner_id
  * @property int $current_round
  * @property string $status
- * @property string $player_points
- * @property string $opponent_points
+ * @property string $player_score
+ * @property string $opponent_score
  */
 class Duel extends Model
 {
