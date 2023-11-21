@@ -8,12 +8,7 @@ class UserDataTest extends TestCase
 {
     public function test_user_data(): void
     {
-        $response = $this->post('/api/login', [
-            'email' => 'john.test@mail.com',
-            'password' => 'password',
-        ]);
-
-        $response->assertStatus(200);
+        $this->login();
 
         $response = $this->get('/api/user-data');
 

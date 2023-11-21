@@ -8,12 +8,7 @@ class CardDataTest extends TestCase
 {
     public function test_card_add_endpoint(): void
     {
-        $response = $this->post('/api/login', [
-            'email' => 'john.test@mail.com',
-            'password' => 'password',
-        ]);
-
-        $response->assertStatus(200);
+        $this->login();
 
         $response = $this->post('/api/cards');
 

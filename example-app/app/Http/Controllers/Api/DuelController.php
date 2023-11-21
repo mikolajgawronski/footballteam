@@ -11,6 +11,7 @@ use App\Http\Interfaces\User\UserServiceInterface;
 use App\Http\Requests\PlayCardRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class DuelController extends Controller
 {
@@ -25,8 +26,8 @@ class DuelController extends Controller
     public function actionList(): JsonResponse
     {
         /** @var User $user */
-        //        $user = Auth::user();
-        $user = User::query()->firstOrFail();
+                $user = Auth::user();
+//        $user = User::query()->firstOrFail();
 
         $duels = $this->duelRepository->getFinishedDuelsForUser($user->id);
         $data = $this->duelDataMapper->getDuelsResponseDataForUser($duels, $user);
@@ -37,8 +38,8 @@ class DuelController extends Controller
     public function actionStartTheDuel(): JsonResponse
     {
         /** @var User $user */
-        //        $user = Auth::user();
-        $user = User::query()->firstOrFail();
+        $user = Auth::user();
+//        $user = User::query()->firstOrFail();
 
         if ($this->duelRepository->getActiveDuelForUser($user->id)) {
             return new JsonResponse(['Message' => 'You already have an active duel! Resuming battle...']);
