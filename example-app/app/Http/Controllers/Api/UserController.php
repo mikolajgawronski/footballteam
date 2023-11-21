@@ -7,6 +7,7 @@ use App\Http\Interfaces\Card\CardRepositoryInterface;
 use App\Http\Interfaces\User\UserDataMapperInterface;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -18,8 +19,8 @@ class UserController extends Controller
     public function actionUserData(): JsonResponse
     {
         /** @var User $user */
-        //        $user = Auth::user();
-        $user = User::query()->firstOrFail();
+        $user = Auth::user();
+//        $user = User::query()->firstOrFail();
 
         //get cards for user
         $cards = $this->cardRepository->getCardsForUser($user->id);

@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $status
  * @property string $player_score
  * @property string $opponent_score
+ * @property User $player
+ * @property User $opponent
+ * @property User $winner
  */
 class Duel extends Model
 {
