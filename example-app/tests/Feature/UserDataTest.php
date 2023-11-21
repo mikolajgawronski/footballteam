@@ -6,6 +6,17 @@ use Tests\TestCase;
 
 class UserDataTest extends TestCase
 {
+    public function test_login_and_logout(): void
+    {
+        $this->login();
+        $this->logout();
+    }
+
+    public function test_fail_login(): void
+    {
+        $this->failLogin();
+    }
+
     public function test_user_data(): void
     {
         $this->login();

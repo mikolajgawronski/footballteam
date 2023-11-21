@@ -55,8 +55,8 @@ class DuelController extends Controller
     public function actionActiveDuel(): JsonResponse
     {
         /** @var User $user */
-        //        $user = Auth::user();
-        $user = User::query()->firstOrFail();
+        $user = Auth::user();
+//        $user = User::query()->firstOrFail();
         $duel = $this->duelRepository->getActiveDuelForUser($user->id) ?? $this->duelRepository->getLastDuelForUser($user->id);
 
         $data = $this->duelDataMapper->getActiveDuelResponseDataForUser($duel);

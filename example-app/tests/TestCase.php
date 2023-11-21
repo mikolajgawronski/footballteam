@@ -17,4 +17,21 @@ abstract class TestCase extends BaseTestCase
 
         $response->assertStatus(200);
     }
+
+    public function failLogin(): void
+    {
+        $response = $this->post('/api/login', [
+            'email' => 'john.test2@mail.com',
+            'password' => 'password2',
+        ]);
+
+        $response->assertStatus(401);
+    }
+
+    public function logout(): void
+    {
+        $response = $this->post('/api/logout');
+
+        $response->assertStatus(200);
+    }
 }
