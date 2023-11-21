@@ -67,8 +67,8 @@ class DuelController extends Controller
     public function actionPlayCard(PlayCardRequest $request): JsonResponse
     {
         /** @var User $user */
-        //        $user = Auth::user();
-        $user = User::query()->firstOrFail();
+                $user = Auth::user();
+//        $user = User::query()->firstOrFail();
         $duel = $this->duelRepository->getActiveDuelForUser($user->id);
         $opponent = $this->userRepository->getOpponentFromDuel($duel);
 

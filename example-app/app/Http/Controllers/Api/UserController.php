@@ -22,7 +22,6 @@ class UserController extends Controller
         $user = Auth::user();
 //        $user = User::query()->firstOrFail();
 
-        //get cards for user
         $cards = $this->cardRepository->getCardsForUser($user->id);
         $data = $this->userDataMapper->getUserResponseData($cards, $user);
 

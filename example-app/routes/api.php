@@ -30,10 +30,6 @@ Route::post('logout', [LoginController::class, 'logout']);
     Route::get('duels/active', [DuelController::class, 'actionActiveDuel'])->name('duel.active');
 
     //User has just selected a card
-//    Route::post('duels/action', function (Request $request) {
-//        return response()->json();
-//    });
-
     Route::post('duels/action', [DuelController::class, 'actionPlayCard'])->name('duel.play');
 
     //DUELS HISTORY

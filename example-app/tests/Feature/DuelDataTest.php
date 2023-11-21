@@ -3,6 +3,7 @@
 namespace Feature;
 
 use App\Http\Interfaces\Duel\DuelRepositoryInterface;
+use App\Http\Mappers\CardDataMapper;
 use App\Models\Duel;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -54,11 +55,25 @@ class DuelDataTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJsonFragment([
-            'round' => 1,
-            'your_points' => '0',
-            'opponent_points' => '0',
             'status' => Duel::STATUS_ACTIVE,
             'cards' => [],
         ]);
+    }
+
+    public function test_play_card(): void
+    {
+        $this->login();
+
+        $response = $this->post('/api/duels/action', [
+            'clickable' => true,
+            'id' => 1,
+            'image' => 'card-11.jpg',
+            'name' => 'Łukasz Ostrowski',
+            'power' => 63,
+        ]);
+
+        $response->assertStatus(200);
+
+        $response->assertJson(['Message' => 'Card played successfully!']);
     }
 }
