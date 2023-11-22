@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 
 class PlayCardRequest extends FormRequest
@@ -51,7 +52,7 @@ class PlayCardRequest extends FormRequest
 
     protected function failedValidation(Validator $validator): void
     {
-        $response = response()->json(['errors' => $validator->errors()]);
+        $response = new Response(['errors' => $validator->errors()], 400);
 
         throw new ValidationException($validator, $response);
     }

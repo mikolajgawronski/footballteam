@@ -8,6 +8,7 @@ use App\Http\Interfaces\Card\CardRepositoryInterface;
 use App\Http\Interfaces\Card\CardServiceInterface;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class CardController extends Controller
 {
@@ -20,10 +21,8 @@ class CardController extends Controller
     public function actionAddNewCard(): JsonResponse
     {
         /** @var User $user */
-        //        $user = Auth::user();
-        $user = User::query()->firstOrFail();
+        $user = Auth::user();
 
-        //get cards for user
         $card = $this->cardRepository->getRandomCard();
         $this->cardService->addCardToUser($user, $card);
 

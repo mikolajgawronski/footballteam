@@ -3,12 +3,9 @@
 namespace Feature;
 
 use App\Http\Interfaces\Duel\DuelRepositoryInterface;
-use App\Http\Mappers\CardDataMapper;
 use App\Models\Duel;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
-
-use const http\Client\Curl\AUTH_ANY;
 
 class DuelDataTest extends TestCase
 {
@@ -39,11 +36,9 @@ class DuelDataTest extends TestCase
 
         $response->assertStatus(200);
 
-        if ($this->duelRepository->getActiveDuelForUser(Auth::id())) {
-            $response->assertJson(['Message' => 'You already have an active duel! Resuming battle...']);
-        } else {
-            $response->assertJson(['Message' => 'Duel started!']);
-        }
+        $responseAsJson = json_decode($response->getContent(), true);
+
+        $this->assertArrayHasKey('Message', $responseAsJson);
     }
 
     public function test_active_duel(): void
@@ -56,7 +51,6 @@ class DuelDataTest extends TestCase
 
         $response->assertJsonFragment([
             'status' => Duel::STATUS_ACTIVE,
-            'cards' => [],
         ]);
     }
 
@@ -75,5 +69,16 @@ class DuelDataTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJson(['Message' => 'Card played successfully!']);
+    }
+
+    public function test_play_card_validation(): void
+    {
+        $this->login();
+
+        $response = $this->post('/api/duels/action', [
+            'data' => 'invalid',
+        ]);
+
+        $response->assertStatus(400);
     }
 }

@@ -34,4 +34,18 @@ class DuelRepositoryTest extends TestCase
         $this->assertIsArray($data);
         $this->assertCount(0, $data);
     }
+
+    public function test_last_duel_for_user_with_no_duels(): void
+    {
+        $data = $this->duelRepository->getLastDuelForUser(self::TEST_USER_WITH_NO_DUELS_ID);
+
+        $this->assertNull($data);
+    }
+
+    public function test_last_duel_for_user_with_duels(): void
+    {
+        $data = $this->duelRepository->getLastDuelForUser(self::TEST_USER_ID);
+
+        $this->assertNotNull($data);
+    }
 }

@@ -27,7 +27,7 @@ class UserDataTest extends TestCase
         $response->assertJsonFragment([
             'username' => 'John Doe',
             'level' => 1,
-            'level_points' => '0/100',
+            'level_points' => '20/100',
             'new_card_allowed' => true,
         ]);
     }

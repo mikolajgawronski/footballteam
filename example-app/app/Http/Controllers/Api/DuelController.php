@@ -26,8 +26,7 @@ class DuelController extends Controller
     public function actionList(): JsonResponse
     {
         /** @var User $user */
-                $user = Auth::user();
-//        $user = User::query()->firstOrFail();
+        $user = Auth::user();
 
         $duels = $this->duelRepository->getFinishedDuelsForUser($user->id);
         $data = $this->duelDataMapper->getDuelsResponseDataForUser($duels, $user);
@@ -39,7 +38,6 @@ class DuelController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-//        $user = User::query()->firstOrFail();
 
         if ($this->duelRepository->getActiveDuelForUser($user->id)) {
             return new JsonResponse(['Message' => 'You already have an active duel! Resuming battle...']);
@@ -56,7 +54,7 @@ class DuelController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-//        $user = User::query()->firstOrFail();
+
         $duel = $this->duelRepository->getActiveDuelForUser($user->id) ?? $this->duelRepository->getLastDuelForUser($user->id);
 
         $data = $this->duelDataMapper->getActiveDuelResponseDataForUser($duel);
@@ -67,8 +65,7 @@ class DuelController extends Controller
     public function actionPlayCard(PlayCardRequest $request): JsonResponse
     {
         /** @var User $user */
-                $user = Auth::user();
-//        $user = User::query()->firstOrFail();
+        $user = Auth::user();
         $duel = $this->duelRepository->getActiveDuelForUser($user->id);
         $opponent = $this->userRepository->getOpponentFromDuel($duel);
 
